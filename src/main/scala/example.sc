@@ -47,3 +47,18 @@ def fib(n : Int) = {
 }
 
 fib(5)
+
+def max(nos : List[Int]) : Int = {
+  @tailrec
+  def loop(max: Int, nos: List[Int]) : Int = {
+    if(nos.isEmpty)
+      max
+    else if(max <= nos.head)
+      loop(nos.head, nos.tail)
+    else
+      loop(max, nos.tail)
+  }
+  loop(nos.head, nos.tail)
+}
+
+max(List(100, 352, 45, 12, 345))
