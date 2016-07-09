@@ -30,4 +30,20 @@ def factorial(x : Int) : Int = {
 factorial(4)
 
 
+def fib(n : Int) = {
 
+  @tailrec
+  def helper(acc1 : Int, acc2: Int, n : Int) : Int = {
+    if (n == 3)
+      acc1 + acc2
+    else
+      helper(acc2, acc1 + acc2, n - 1)
+  }
+  if(n == 1 || n == 2){
+    1
+  } else {
+    helper(1, 1, n)
+  }
+}
+
+fib(5)

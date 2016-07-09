@@ -1,5 +1,7 @@
 package recfun
 
+import scala.annotation.tailrec
+
 object Main {
   def main(args: Array[String]) {
     println("Pascal's Triangle")
@@ -12,6 +14,7 @@ object Main {
     println(balance("I told him (that it’s not (yet) done). (But he wasn’t listening)".toList))
     println(balance(":-)".toList))
     println(balance("())(".toList))
+    println(countChange(4, List(1, 2)))
 
   }
 
@@ -29,6 +32,7 @@ object Main {
     * Exercise 2
     */
   def balance(chars: List[Char]): Boolean = {
+    @tailrec
     def helper(res: Boolean, braces: List[Char], char : Char, chars : List[Char]) : Boolean = {
       if (chars.isEmpty) {
         if (braces.isEmpty && char != '(' && char != ')')
@@ -61,6 +65,16 @@ object Main {
   /**
     * Exercise 3
     */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    def count( n: Int, m: Int ): Int = {
+      if (n < 0 || m <= 0)
+        0
+      else if (n == 0)
+        1
+      else
+        count(n, m - 1) + count(n - coins(m - 1), m)
+    }
+    count(money, coins.size)
+  }
 }
 
