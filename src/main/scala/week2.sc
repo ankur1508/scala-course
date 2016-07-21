@@ -29,3 +29,11 @@ def mapReduce(f: Int => Int, combine: (Int, Int) => Int, init: Int)(a:Int, b: In
 }
 
 mapReduce(a => a, (x, y) => x * y, 1)(1, 3)
+
+
+
+
+
+
+
+

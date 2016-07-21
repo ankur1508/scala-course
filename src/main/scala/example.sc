@@ -62,3 +62,4 @@ def max(nos : List[Int]) : Int = {
 }
 
 max(List(100, 352, 45, 12, 345))
+
