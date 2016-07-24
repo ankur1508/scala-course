@@ -259,8 +259,8 @@ object Huffman {
       tree match {
         case Leaf(c, _) => (c, bits) :: acc
         case Fork(left, right, _, _) => {
-          val leftAcc = helper(left, 0 :: bits, acc)
-          helper(right, 1 :: bits, leftAcc)
+          val leftAcc = helper(left, bits ::: List(0), acc)
+          helper(right, bits ::: List(1), leftAcc)
         }
       }
     }
