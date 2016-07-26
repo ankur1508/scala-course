@@ -56,3 +56,36 @@ def msort(list: List[Int]) : List[Int] = {
 }
 
 msort(List(10, 9 , 5, 16, 35, 20))
+
+def pack[T](xs: List[T]): List[List[T]] = xs match {
+  case Nil => Nil
+  case x :: xs1 =>{
+    val (eq, diff) = xs.span(y => y == x)
+    List(eq) ::: pack(diff)
+  }
+}
+pack(List("a", "a", "a", "b", "c", "c", "a"))
+
+
+def encode[T](xs : List[T]) : List[(T, Int)] = {
+  val lists : List[List[T]] = pack(xs)
+  def helper[T](lists: List[List[T]]) :  List[(T, Int)] = lists match {
+    case Nil => Nil
+    case (y :: ys1) => (y.head, y.length) :: helper(ys1)
+  }
+  helper(lists)
+}
+
+encode(List("a", "a", "a", "b", "c", "c", "a"))
+
+
+val nos = List(10, 9 , 5, 16, 35, 20)
+nos.reduceLeft(_ + _)
+
+def mapFun[T, U](xs: List[T], f: T => U): List[U] =
+  (xs foldRight List[U]())((x, y) => f(x) :: y)
+
+def lengthFun[T](xs: List[T]): Int =
+  (xs foldRight 0)((x, y) => y + 1)
+
+lengthFun(List("a", "a", "a", "b", "c", "c", "a"))
