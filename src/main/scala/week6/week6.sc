@@ -19,6 +19,8 @@ def getWords(charCombinations: List[Anagrams.Occurrences]) : Anagrams.Sentence =
 }
 getWords(charCombinations)
 
+Anagrams.sentenceAnagrams(List("Yes", "man"))
 
-words.filter(x => !x.isEmpty).flatMap(words => for (word <- words) yield word).toSet
-//Anagrams.sentenceAnagrams(List("Linux", "rulez"))
+val nos = Anagrams.sentenceOccurrences(List("Yes", "man"))
+nos.foreach()
+

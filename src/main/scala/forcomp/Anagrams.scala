@@ -167,36 +167,16 @@ object Anagrams {
    *  Note: There is only one anagram of an empty sentence.
    */
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
-    if (sentence isEmpty) List(Nil)
-    else {
-      val charOcurrences = sentenceOccurrences(sentence)
-      val charCombinations = combinations(charOcurrences)
-
-      def getWords(charCombinations: List[Occurrences]) : Sentence = {
-        charCombinations match {
-          case Nil => Nil
-          case x :: xs =>  if(dictionaryByOccurrences.contains(x)) dictionaryByOccurrences(x) ::: getWords(xs) else getWords(xs)
-        }
-      }
-      val words = getWords(charCombinations).toSet.toList
-      def wordCombinations(words: Sentence): List[Sentence] = {
-        def addWord(newWord: Word, sentence: Sentence): List[Sentence] = {
-          val sentences = for (i <- 0 to sentence.length) yield {
-            val (left, right) = sentence.splitAt(i)
-            left ::: (newWord :: right)
-          }
-          sentences.toList
-        }
-        words match {
-          case Nil => List(List())
-          case List(x) => List(List(x))
-          case x :: ys => {
-            val ys_combs = wordCombinations(ys)
-            ys_combs.flatMap(sentence => addWord(x, sentence))
-          }
-        }
-      }
-      wordCombinations(words)
+    def subSentence(occ: Occurrences): List[Sentence] = {
+      if (occ.isEmpty) List(List())
+      else
+        for {
+          x <- combinations(occ)
+          y <- dictionaryByOccurrences.getOrElse(x, List())
+          z <- subSentence(subtract(occ, x))
+        } yield y :: z
     }
+    subSentence(sentenceOccurrences(sentence))
   }
+
 }
